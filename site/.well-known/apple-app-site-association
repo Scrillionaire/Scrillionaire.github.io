@@ -1,0 +1,29 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "4AM5US9G8B.ai.scrillionaire.Scrillionaire"
+        ],
+        "components": [
+          {
+            "/": "/u/*",
+            "comment": "Public Scrillionaire profiles"
+          },
+          {
+            "/": "/groups/new",
+            "comment": "Create a Scrillionaire group"
+          },
+          {
+            "/": "/groups/*",
+            "comment": "Scrillionaire groups"
+          },
+          {
+            "/": "/invite/*",
+            "comment": "Scrillionaire group invitations"
+          }
+        ]
+      }
+    ]
+  }
+}
