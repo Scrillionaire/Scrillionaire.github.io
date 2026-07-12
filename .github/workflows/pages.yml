@@ -71,9 +71,12 @@ jobs:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
           set -euo pipefail
-          aasa_url="${PAGE_URL%/}/.well-known/apple-app-site-association"
-          headers="$RUNNER_TEMP/aasa-headers"
-          body="$RUNNER_TEMP/aasa-body"
+          page_url="${PAGE_URL%/}"
+          page_host="${page_url#*://}"
+          page_host="${page_host%%/*}"
+          aasa_url="$page_url/.well-known/apple-app-site-association"
+          origin_headers="$RUNNER_TEMP/aasa-origin-headers"
+          origin_body="$RUNNER_TEMP/aasa-origin-body"
           curl \
             --fail \
             --location \
@@ -81,8 +84,35 @@ jobs:
             --retry 6 \
             --retry-all-errors \
             --retry-delay 10 \
-            --dump-header "$headers" \
-            --output "$body" \
+            --dump-header "$origin_headers" \
+            --output "$origin_body" \
             "$aasa_url"
-          grep -Eiq '^content-type:[[:space:]]*(application/json|application/pkcs7-mime)' "$headers"
-          jq -e '.applinks.details[0].appIDs == ["4AM5US9G8B.ai.scrillionaire.Scrillionaire"]' "$body"
+          if ! grep -Eiq '^content-type:[[:space:]]*(application/json|application/pkcs7-mime)' "$origin_headers"; then
+            grep -Eiq '^server:[[:space:]]*GitHub\.com' "$origin_headers"
+            grep -Eiq '^content-type:[[:space:]]*application/octet-stream' "$origin_headers"
+          fi
+          jq -e '
+            (.applinks.details | length) == 1 and
+            .applinks.details[0].appIDs == ["4AM5US9G8B.ai.scrillionaire.Scrillionaire"] and
+            [.applinks.details[0].components[]["/"]] == ["/u/*", "/groups/new", "/groups/*", "/invite/*"]
+          ' "$origin_body"
+
+          cdn_headers="$RUNNER_TEMP/aasa-cdn-headers"
+          cdn_body="$RUNNER_TEMP/aasa-cdn-body"
+          curl \
+            --fail \
+            --location \
+            --max-redirs 0 \
+            --retry 6 \
+            --retry-all-errors \
+            --retry-delay 10 \
+            --dump-header "$cdn_headers" \
+            --output "$cdn_body" \
+            "https://app-site-association.cdn-apple.com/a/v1/$page_host"
+          grep -Eiq '^content-type:[[:space:]]*application/json' "$cdn_headers"
+          grep -Eiq '^apple-origin-format:[[:space:]]*json' "$cdn_headers"
+          jq -e '
+            (.applinks.details | length) == 1 and
+            .applinks.details[0].appIDs == ["4AM5US9G8B.ai.scrillionaire.Scrillionaire"] and
+            [.applinks.details[0].components[]["/"]] == ["/u/*", "/groups/new", "/groups/*", "/invite/*"]
+          ' "$cdn_body"

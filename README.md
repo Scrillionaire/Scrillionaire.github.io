@@ -16,4 +16,7 @@ otherwise omit `.well-known`.
 
 After deployment, the workflow validates AASA at the exact URL returned by `deploy-pages`. This
 checks the default organization Pages domain during bootstrap and automatically checks
-`scrillionaire.ai` after GitHub attaches the custom domain.
+`scrillionaire.ai` after GitHub attaches the custom domain. GitHub Pages serves the extensionless
+file as `application/octet-stream`, so the workflow also requires the origin to identify itself as
+GitHub Pages and verifies that Apple's associated-domains CDN fetches the same contract and
+normalizes it to JSON.
