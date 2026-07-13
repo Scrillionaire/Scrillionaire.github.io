@@ -21,6 +21,10 @@
           {
             "/": "/invite/*",
             "comment": "Scrillionaire group invitations"
+          },
+          {
+            "/": "/plaid/*",
+            "comment": "Plaid OAuth returns"
           }
         ]
       }
