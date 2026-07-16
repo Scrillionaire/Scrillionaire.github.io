@@ -72,6 +72,16 @@ main {
   border-bottom: 1px solid var(--line);
 }
 
+.route-avatar {
+  width: 88px;
+  height: 88px;
+  margin: 0 0 24px;
+  display: block;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+
 .eyebrow {
   margin: 0 0 16px;
   color: var(--teal);
@@ -151,6 +161,84 @@ h1 {
   gap: 34px;
 }
 
+.principles[hidden] {
+  display: none;
+}
+
+.leaderboard-band {
+  padding: 54px max(22px, calc((100% - 1120px) / 2)) 68px;
+  border-bottom: 1px solid var(--line);
+}
+
+.leaderboard-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+  gap: 54px;
+}
+
+.leaderboard-group {
+  min-width: 0;
+}
+
+.leaderboard-group h2 {
+  margin-bottom: 18px;
+  font-size: 20px;
+}
+
+.leaderboard-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.leaderboard-list li {
+  border-bottom: 1px solid var(--line);
+}
+
+.leaderboard-list a {
+  min-height: 72px;
+  padding: 14px 2px;
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.leaderboard-list a:hover,
+.leaderboard-list a:focus-visible {
+  color: #006f55;
+}
+
+.leaderboard-rank {
+  font-size: 19px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 760;
+}
+
+.leaderboard-identity {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.leaderboard-identity strong,
+.leaderboard-identity small {
+  overflow-wrap: anywhere;
+}
+
+.leaderboard-identity strong {
+  font-size: 16px;
+}
+
+.leaderboard-identity small {
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .principles article {
   min-width: 0;
   padding-top: 18px;
@@ -222,6 +310,11 @@ footer {
   .principles {
     grid-template-columns: 1fr;
     gap: 34px;
+  }
+
+  .leaderboard-content {
+    grid-template-columns: 1fr;
+    gap: 44px;
   }
 
   .principle-icon {
