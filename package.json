@@ -3,6 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/validate-site.mjs && node --check site/assets/site.js"
+    "test": "node --test scripts/**/*.test.mjs && node scripts/validate-site.mjs && node scripts/income/validate-snapshot.mjs && node --check site/assets/site.js && node --check site/assets/public-profile.js && node --check site/assets/config.js",
+    "test:income": "node --test scripts/income/*.test.mjs",
+    "generate:income": "node scripts/income/generate-census-snapshot.mjs",
+    "validate:income": "node scripts/income/validate-snapshot.mjs"
   }
 }

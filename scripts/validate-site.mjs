@@ -1,5 +1,10 @@
 import assert from "node:assert/strict";
 import { readFile, stat } from "node:fs/promises";
+import {
+  formatPublicScore,
+  isPublicLeaderboardEntry,
+  publicProfileEndpoint,
+} from "../site/assets/public-profile.js";
 import { routeForPath } from "../site/assets/routes.js";
 
 const appID = "4AM5US9G8B.ai.scrillionaire.Scrillionaire";
@@ -29,3 +34,25 @@ assert.equal(routeForPath("/groups/group_123").kind, "group");
 assert.equal(routeForPath("/invite/token~123").kind, "invite");
 assert.equal(routeForPath("/invite/not%2Fa%2Ftoken").kind, "not-found");
 assert.equal(routeForPath("/unknown").kind, "not-found");
+
+assert.equal(
+  publicProfileEndpoint("https://rank.example/public/v1/profiles", "Valid_Handle-1"),
+  "https://rank.example/public/v1/profiles/Valid_Handle-1",
+);
+assert.throws(
+  () => publicProfileEndpoint("https://rank.example/public/v1/profiles", "_invalid"),
+  /Invalid public profile handle/,
+);
+assert.equal(formatPublicScore({ minorUnits: 123456, currency: "usd" }), "$1,234.56");
+assert.equal(formatPublicScore({ minorUnits: 123456, currency: "not-money" }), null);
+assert.equal(
+  isPublicLeaderboardEntry({ rank: 1, handle: "leader", displayName: "Leader" }),
+  true,
+);
+assert.equal(
+  isPublicLeaderboardEntry({ rank: 0, handle: "leader", displayName: "Leader" }),
+  false,
+);
+
+const indexHTML = await readFile(new URL("../site/index.html", import.meta.url), "utf8");
+assert.match(indexHTML, /connect-src https:\/\/rank-387025613085\.us-central1\.run\.app/);
