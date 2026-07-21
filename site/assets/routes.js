@@ -29,10 +29,9 @@ export function routeForPath(pathname) {
       kind: "profile",
       eyebrow: "Public profile",
       title: `@${segments[1]}`,
-      summary: "Loading this member's public leaderboard details.",
+      summary: "This public profile is currently available in Scrillionaire for iOS.",
       label: "Handle",
       value: `@${segments[1]}`,
-      handle: segments[1],
     };
   }
 

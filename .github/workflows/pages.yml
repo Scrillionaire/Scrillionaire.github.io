@@ -94,16 +94,7 @@ jobs:
           jq -e '
             (.applinks.details | length) == 1 and
             .applinks.details[0].appIDs == ["4AM5US9G8B.ai.scrillionaire.Scrillionaire"] and
-            (
-              [
-                "/u/*",
-                "/groups/new",
-                "/groups/*",
-                "/invite/*",
-                "/plaid/*"
-              ] - [.applinks.details[0].components[]["/"]]
-              | length
-            ) == 0
+            [.applinks.details[0].components[]["/"]] == ["/u/*", "/groups/new", "/groups/*", "/invite/*"]
           ' "$origin_body"
 
           cdn_headers="$RUNNER_TEMP/aasa-cdn-headers"
@@ -123,14 +114,5 @@ jobs:
           jq -e '
             (.applinks.details | length) == 1 and
             .applinks.details[0].appIDs == ["4AM5US9G8B.ai.scrillionaire.Scrillionaire"] and
-            (
-              [
-                "/u/*",
-                "/groups/new",
-                "/groups/*",
-                "/invite/*",
-                "/plaid/*"
-              ] - [.applinks.details[0].components[]["/"]]
-              | length
-            ) == 0
+            [.applinks.details[0].components[]["/"]] == ["/u/*", "/groups/new", "/groups/*", "/invite/*"]
           ' "$cdn_body"
