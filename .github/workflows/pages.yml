@@ -93,8 +93,8 @@ jobs:
           fi
           jq -e '
             (.applinks.details | length) == 1 and
-            .applinks.details[0].appIDs == ["4AM5US9G8B.ai.scrillionaire.Scrillionaire"] and
-            [.applinks.details[0].components[]["/"]] == ["/u/*", "/groups/new", "/groups/*", "/invite/*"]
+            .applinks.details[0].appIDs == ["4AM5US9G8B.com.IamGoodBad.Scrillionaire"] and
+            [.applinks.details[0].components[]["/"]] == ["/u/*", "/groups/new", "/groups/*", "/invite/*", "/plaid/*"]
           ' "$origin_body"
 
           cdn_headers="$RUNNER_TEMP/aasa-cdn-headers"
@@ -113,6 +113,6 @@ jobs:
           grep -Eiq '^apple-origin-format:[[:space:]]*json' "$cdn_headers"
           jq -e '
             (.applinks.details | length) == 1 and
-            .applinks.details[0].appIDs == ["4AM5US9G8B.ai.scrillionaire.Scrillionaire"] and
-            [.applinks.details[0].components[]["/"]] == ["/u/*", "/groups/new", "/groups/*", "/invite/*"]
+            .applinks.details[0].appIDs == ["4AM5US9G8B.com.IamGoodBad.Scrillionaire"] and
+            [.applinks.details[0].components[]["/"]] == ["/u/*", "/groups/new", "/groups/*", "/invite/*", "/plaid/*"]
           ' "$cdn_body"
