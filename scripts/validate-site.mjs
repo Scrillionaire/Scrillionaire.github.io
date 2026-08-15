@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile, stat } from "node:fs/promises";
 import { routeForPath } from "../site/assets/routes.js";
 
-const appID = "4AM5US9G8B.ai.scrillionaire.Scrillionaire";
+const appID = "4AM5US9G8B.com.IamGoodBad.Scrillionaire";
 const requiredPaths = ["/u/*", "/groups/new", "/groups/*", "/invite/*", "/plaid/*"];
 const aasaPath = new URL("../site/.well-known/apple-app-site-association", import.meta.url);
 const aasa = JSON.parse(await readFile(aasaPath, "utf8"));
